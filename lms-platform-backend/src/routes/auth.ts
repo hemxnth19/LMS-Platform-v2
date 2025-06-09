@@ -1,6 +1,7 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
+import { checkRole } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -196,6 +197,19 @@ router.post('/register', async (req, res) => {
     } else {
       res.status(500).json({ message: 'Server error' });
     }
+  }
+});
+
+// Get all employees (Admin only)
+router.get('/users', checkRole(['admin']), async (req: Request, res: Response) => {
+  try {
+    const users = await User.find({ role: 'employee' })
+      .select('-password')
+      .sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Error fetching users' });
   }
 });
 

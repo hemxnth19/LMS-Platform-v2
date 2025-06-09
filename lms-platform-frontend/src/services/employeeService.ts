@@ -19,7 +19,7 @@ export interface Employee {
 export const employeeService = {
   getAllEmployees: async (): Promise<Employee[]> => {
     try {
-      const response = await axios.get(`${API_URL}/users`, {
+      const response = await axios.get(`${API_URL}/auth/users`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -33,12 +33,12 @@ export const employeeService = {
 
   getEmployeeById: async (id: string): Promise<Employee> => {
     try {
-      const response = await axios.get(`${API_URL}/users/${id}`, {
+      const response = await axios.get(`${API_URL}/admin/employees/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      return response.data;
+      return response.data.employee;
     } catch (error) {
       console.error('Error fetching employee:', error);
       throw error;
@@ -47,7 +47,7 @@ export const employeeService = {
 
   updateEmployee: async (id: string, data: Partial<Employee>): Promise<Employee> => {
     try {
-      const response = await axios.put(`${API_URL}/users/${id}`, data, {
+      const response = await axios.put(`${API_URL}/admin/employees/${id}`, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

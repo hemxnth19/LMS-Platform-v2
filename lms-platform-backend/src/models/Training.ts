@@ -13,6 +13,7 @@ export interface ITraining extends mongoose.Document {
   type: 'workshop' | 'seminar' | 'certification' | 'other';
   prerequisites?: string[];
   materials?: string[];
+  participants: mongoose.Types.ObjectId[];
   createdBy: mongoose.Types.ObjectId;
   enrolledParticipants: Array<{
     participant: mongoose.Types.ObjectId;
@@ -56,7 +57,8 @@ const trainingSchema = new Schema({
   },
   currentParticipants: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   },
   status: {
     type: String,
@@ -75,6 +77,10 @@ const trainingSchema = new Schema({
   materials: [{
     type: String,
     trim: true
+  }],
+  participants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   }],
   createdBy: {
     type: Schema.Types.ObjectId,

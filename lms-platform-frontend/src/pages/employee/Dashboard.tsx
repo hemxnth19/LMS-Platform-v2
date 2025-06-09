@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { fetchCoursesStart, fetchCoursesSuccess, fetchCoursesFailure } from '../../features/courses/coursesSlice';
 import { fetchSkillsStart, fetchSkillsSuccess, fetchSkillsFailure } from '../../features/skills/skillsSlice';
@@ -19,6 +19,10 @@ import {
   ListItem,
   ListItemText,
   Chip,
+  Container,
+  Button,
+  CircularProgress,
+  Alert,
 } from '@mui/material';
 import {
   School as SchoolIcon,
@@ -26,6 +30,18 @@ import {
   TrendingUp as TrendingUpIcon,
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import { trainingAPI } from '../../services/api';
+
+interface Training {
+  _id: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  currentParticipants: number;
+  maxParticipants: number;
+}
 
 const EmployeeDashboard = () => {
   const dispatch = useAppDispatch();
@@ -33,12 +49,16 @@ const EmployeeDashboard = () => {
   const { skills } = useAppSelector((state) => state.skills);
   const { notifications } = useAppSelector((state) => state.notifications);
   const { user } = useAppSelector((state) => state.auth);
+  const [upcomingTrainings, setUpcomingTrainings] = useState<Training[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-      // Fetch courses
-      dispatch(fetchCoursesStart());
+        // Fetch courses
+        dispatch(fetchCoursesStart());
         const coursesData = await coursesAPI.getCourses();
         dispatch(fetchCoursesSuccess(coursesData));
 
@@ -54,6 +74,30 @@ const EmployeeDashboard = () => {
 
     fetchData();
   }, [dispatch]);
+
+  useEffect(() => {
+    fetchUpcomingTrainings();
+  }, []);
+
+  const fetchUpcomingTrainings = async () => {
+    try {
+      setLoading(true);
+      const trainings = await trainingAPI.getAllTrainings();
+      const upcomingTrainings = trainings
+        .filter((training: Training) => new Date(training.startDate) > new Date())
+        .slice(0, 3); // Get only 3 upcoming trainings
+      setUpcomingTrainings(upcomingTrainings);
+    } catch (err) {
+      setError('Failed to fetch upcoming trainings');
+      console.error('Error fetching trainings:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleViewAllTrainings = () => {
+    navigate('/employee/trainings');
+  };
 
   const stats = [
     {
@@ -82,11 +126,20 @@ const EmployeeDashboard = () => {
     },
   ];
 
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-    <Box>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom>
         Welcome, {user?.name}
       </Typography>
+
       <Grid container spacing={3}>
         {/* Stats Cards */}
         {stats.map((stat) => (
@@ -179,8 +232,69 @@ const EmployeeDashboard = () => {
             </List>
           </Paper>
         </Grid>
+
+        {/* Upcoming Trainings Section */}
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h6">Upcoming Trainings</Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleViewAllTrainings}
+                >
+                  View All Trainings
+                </Button>
+              </Box>
+              
+              {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  {error}
+                </Alert>
+              )}
+
+              {upcomingTrainings.length === 0 ? (
+                <Typography variant="body1" color="text.secondary">
+                  No upcoming trainings available.
+                </Typography>
+              ) : (
+                <Grid container spacing={2}>
+                  {upcomingTrainings.map((training) => (
+                    <Grid item xs={12} md={4} key={training._id}>
+                      <Card variant="outlined">
+                        <CardContent>
+                          <Typography variant="h6" gutterBottom>
+                            {training.title}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary" paragraph>
+                            {training.description}
+                          </Typography>
+                          <Typography variant="body2">
+                            Start Date: {new Date(training.startDate).toLocaleDateString()}
+                          </Typography>
+                          <Typography variant="body2">
+                            Participants: {training.currentParticipants}/{training.maxParticipants}
+                          </Typography>
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            sx={{ mt: 1 }}
+                            onClick={handleViewAllTrainings}
+                          >
+                            View Details
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 };
 

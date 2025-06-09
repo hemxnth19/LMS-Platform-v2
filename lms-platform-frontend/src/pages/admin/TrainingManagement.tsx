@@ -75,8 +75,8 @@ const TrainingManagement = () => {
 
   const fetchTrainings = async () => {
     try {
-      const response = await trainingAPI.getTrainings();
-      setTrainings(response.trainings);
+      const trainings = await trainingAPI.getAllTrainings();
+      setTrainings(trainings);
     } catch (error) {
       console.error('Error fetching trainings:', error);
       setError('Failed to fetch trainings');

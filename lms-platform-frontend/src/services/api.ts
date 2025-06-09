@@ -1,7 +1,13 @@
 import axios from 'axios';
 
+const API_URL = 'http://localhost:5000/api';
+
+const getToken = () => {
+  return localStorage.getItem('token');
+};
+
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -10,7 +16,7 @@ const api = axios.create({
 // Add a request interceptor to add the auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -137,12 +143,47 @@ export const notificationsAPI = {
 };
 
 export const trainingAPI = {
-  createTraining: async (trainingData: any) => {
-    const response = await api.post('/admin/trainings', trainingData);
+  // Get all trainings
+  getAllTrainings: async () => {
+    const response = await axios.get(`${API_URL}/trainings`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
     return response.data;
   },
-  getTrainings: async () => {
-    const response = await api.get('/admin/trainings');
+
+  // Get a specific training
+  getTrainingById: async (id: string) => {
+    const response = await axios.get(`${API_URL}/trainings/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  },
+
+  // Create a new training
+  createTraining: async (trainingData: any) => {
+    const response = await axios.post(`${API_URL}/trainings`, trainingData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  },
+
+  // Join a training
+  joinTraining: async (trainingId: string) => {
+    const response = await axios.post(
+      `${API_URL}/trainings/${trainingId}/join`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    );
     return response.data;
   },
 };
