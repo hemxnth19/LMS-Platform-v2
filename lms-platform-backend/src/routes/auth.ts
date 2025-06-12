@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 import { checkRole } from '../middleware/auth';
+=======
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/User';
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 
 const router = express.Router();
 
@@ -200,6 +206,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // Get all employees (Admin only)
 router.get('/users', checkRole(['admin']), async (req: Request, res: Response) => {
   try {
@@ -213,4 +220,6 @@ router.get('/users', checkRole(['admin']), async (req: Request, res: Response) =
   }
 });
 
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 export default router; 

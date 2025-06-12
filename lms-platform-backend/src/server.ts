@@ -3,8 +3,11 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth';
+<<<<<<< HEAD
 import adminRoutes from './routes/admin';
 import trainingsRoutes from './routes/trainings';
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 
 // Load environment variables
 dotenv.config();
@@ -26,9 +29,21 @@ console.log('Connecting to MongoDB:', MONGODB_URI);
 
 mongoose.connect(MONGODB_URI)
 .then(() => {
+<<<<<<< HEAD
   console.log('Connected to MongoDB');
   console.log('Database:', mongoose.connection.db.databaseName);
   console.log('Collections:', Object.keys(mongoose.connection.collections));
+=======
+  console.log('Connected to MongoDB successfully');
+  // List all collections
+  mongoose.connection.db.listCollections().toArray()
+    .then(collections => {
+      console.log('Available collections:', collections.map(c => c.name));
+    })
+    .catch(err => {
+      console.error('Error listing collections:', err);
+    });
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 })
 .catch(err => {
   console.error('MongoDB connection error:', err);
@@ -37,8 +52,11 @@ mongoose.connect(MONGODB_URI)
 
 // Routes
 app.use('/api/auth', authRoutes);
+<<<<<<< HEAD
 app.use('/api/admin', adminRoutes);
 app.use('/api/trainings', trainingsRoutes);
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 
 // Test route
 app.get('/', (req, res) => {

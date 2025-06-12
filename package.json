@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "lms-portal",
   "version": "1.0.0",
   "description": "Learning Management System Portal",
@@ -11,12 +12,20 @@
   "devDependencies": {
     "concurrently": "^8.2.0"
   },
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.18",
+<<<<<<< HEAD
     "@mui/material": "^5.15.18",
     "@types/luxon": "^3.6.2",
     "luxon": "^3.6.1"
   }
 }
+=======
+    "@mui/material": "^5.15.18"
+  }
+}
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b

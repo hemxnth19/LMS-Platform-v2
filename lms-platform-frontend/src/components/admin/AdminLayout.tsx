@@ -1,5 +1,9 @@
 import { useState } from 'react';
+<<<<<<< HEAD
 import { Outlet, Link, useNavigate } from 'react-router-dom';
+=======
+import { Outlet, useNavigate } from 'react-router-dom';
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { logout } from '../../features/auth/authSlice';
 import {
@@ -18,7 +22,10 @@ import {
   Menu,
   MenuItem,
   Avatar,
+<<<<<<< HEAD
   Divider,
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -26,7 +33,10 @@ import {
   School as SchoolIcon,
   People as PeopleIcon,
   Notifications as NotificationsIcon,
+<<<<<<< HEAD
   Event as EventIcon,
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
   Settings as SettingsIcon,
   ExitToApp as LogoutIcon,
 } from '@mui/icons-material';
@@ -71,7 +81,10 @@ const AdminLayout = () => {
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin' },
     { text: 'Courses', icon: <SchoolIcon />, path: '/admin/courses' },
     { text: 'Employees', icon: <PeopleIcon />, path: '/admin/employees' },
+<<<<<<< HEAD
     { text: 'Trainings', icon: <EventIcon />, path: '/admin/trainings' },
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
     { text: 'Settings', icon: <SettingsIcon />, path: '/admin/settings' },
   ];
 
@@ -82,15 +95,26 @@ const AdminLayout = () => {
           LMS Admin
         </Typography>
       </Toolbar>
+<<<<<<< HEAD
       <Divider />
       <List>
         {menuItems.map((item) => (
           <ListItem button key={item.text} component={Link} to={item.path}>
+=======
+      <List>
+        {menuItems.map((item) => (
+          <ListItem
+            button
+            key={item.text}
+            onClick={() => navigate(item.path)}
+          >
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
       </List>
+<<<<<<< HEAD
       <Divider />
       <List>
         <ListItem button onClick={handleLogout}>
@@ -100,6 +124,8 @@ const AdminLayout = () => {
           <ListItemText primary="Logout" />
         </ListItem>
       </List>
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
     </div>
   );
 

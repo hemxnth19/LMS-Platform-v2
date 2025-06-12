@@ -28,7 +28,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+<<<<<<< HEAD
     "@types/node": "^22.15.30",
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.4.1",
     "eslint": "^9.25.0",

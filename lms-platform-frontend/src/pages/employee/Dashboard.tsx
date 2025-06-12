@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useEffect, useState } from 'react';
+=======
+import { useEffect } from 'react';
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import { fetchCoursesStart, fetchCoursesSuccess, fetchCoursesFailure } from '../../features/courses/coursesSlice';
 import { fetchSkillsStart, fetchSkillsSuccess, fetchSkillsFailure } from '../../features/skills/skillsSlice';
@@ -19,10 +23,13 @@ import {
   ListItem,
   ListItemText,
   Chip,
+<<<<<<< HEAD
   Container,
   Button,
   CircularProgress,
   Alert,
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 } from '@mui/material';
 import {
   School as SchoolIcon,
@@ -30,6 +37,7 @@ import {
   TrendingUp as TrendingUpIcon,
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 import { trainingAPI } from '../../services/api';
 
@@ -42,6 +50,8 @@ interface Training {
   currentParticipants: number;
   maxParticipants: number;
 }
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 
 const EmployeeDashboard = () => {
   const dispatch = useAppDispatch();
@@ -49,16 +59,24 @@ const EmployeeDashboard = () => {
   const { skills } = useAppSelector((state) => state.skills);
   const { notifications } = useAppSelector((state) => state.notifications);
   const { user } = useAppSelector((state) => state.auth);
+<<<<<<< HEAD
   const [upcomingTrainings, setUpcomingTrainings] = useState<Training[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+<<<<<<< HEAD
         // Fetch courses
         dispatch(fetchCoursesStart());
+=======
+      // Fetch courses
+      dispatch(fetchCoursesStart());
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
         const coursesData = await coursesAPI.getCourses();
         dispatch(fetchCoursesSuccess(coursesData));
 
@@ -75,6 +93,7 @@ const EmployeeDashboard = () => {
     fetchData();
   }, [dispatch]);
 
+<<<<<<< HEAD
   useEffect(() => {
     fetchUpcomingTrainings();
   }, []);
@@ -99,6 +118,8 @@ const EmployeeDashboard = () => {
     navigate('/employee/trainings');
   };
 
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
   const stats = [
     {
       title: 'Enrolled Courses',
@@ -126,6 +147,7 @@ const EmployeeDashboard = () => {
     },
   ];
 
+<<<<<<< HEAD
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
@@ -140,6 +162,13 @@ const EmployeeDashboard = () => {
         Welcome, {user?.name}
       </Typography>
 
+=======
+  return (
+    <Box>
+      <Typography variant="h4" gutterBottom>
+        Welcome, {user?.name}
+      </Typography>
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
       <Grid container spacing={3}>
         {/* Stats Cards */}
         {stats.map((stat) => (
@@ -232,6 +261,7 @@ const EmployeeDashboard = () => {
             </List>
           </Paper>
         </Grid>
+<<<<<<< HEAD
 
         {/* Upcoming Trainings Section */}
         <Grid item xs={12}>
@@ -295,6 +325,10 @@ const EmployeeDashboard = () => {
         </Grid>
       </Grid>
     </Container>
+=======
+      </Grid>
+    </Box>
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
   );
 };
 

@@ -2,10 +2,13 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api';
 
+<<<<<<< HEAD
 const getToken = () => {
   return localStorage.getItem('token');
 };
 
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -13,6 +16,7 @@ const api = axios.create({
   },
 });
 
+<<<<<<< HEAD
 // Add a request interceptor to add the auth token
 api.interceptors.request.use(
   (config) => {
@@ -26,6 +30,16 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+=======
+// Add token to requests if it exists
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 
 export const authAPI = {
   register: async (userData: {
@@ -142,6 +156,7 @@ export const notificationsAPI = {
   },
 };
 
+<<<<<<< HEAD
 export const trainingAPI = {
   // Get all trainings
   getAllTrainings: async () => {
@@ -188,4 +203,6 @@ export const trainingAPI = {
   },
 };
 
+=======
+>>>>>>> 8466164199ee7646163a02125470e8e0d004456b
 export default api; 
