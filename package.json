@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "lms-portal",
   "version": "1.0.0",
   "description": "Learning Management System Portal",
@@ -11,9 +10,7 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
-  }
-} 
-=======
+  },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -23,4 +20,3 @@
     "luxon": "^3.6.1"
   }
 }
->>>>>>> e71c45b6456b2400d838fbe354c021407c501e92
