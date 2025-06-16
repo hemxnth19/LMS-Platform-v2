@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const TrainingManagement = () => {
     const [trainings, setTrainings] = useState([]);
@@ -150,6 +151,54 @@ const TrainingManagement = () => {
         }
     };
 
+    const handleDelete = async (id) => {
+        if (window.confirm('Are you sure you want to delete this training?')) {
+            try {
+                console.log('Attempting to delete training with ID:', id);
+                
+                const response = await axios.delete(`http://localhost:5000/api/trainings/${id}`, {
+                    headers: {
+                        'x-auth-token': localStorage.getItem('token'),
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                console.log('Delete response:', response.data);
+                
+                if (response.data.msg) {
+                    setAlert({
+                        open: true,
+                        message: response.data.msg,
+                        severity: 'success'
+                    });
+                    // Refresh the training list
+                    await fetchTrainings();
+                }
+            } catch (err) {
+                console.error('Error deleting training:', err);
+                console.error('Error details:', {
+                    status: err.response?.status,
+                    data: err.response?.data,
+                    message: err.message
+                });
+                
+                let errorMessage = 'Error deleting training. Please try again.';
+                
+                if (err.response?.data?.msg) {
+                    errorMessage = err.response.data.msg;
+                } else if (err.response?.data?.error) {
+                    errorMessage = err.response.data.error;
+                }
+                
+                setAlert({
+                    open: true,
+                    message: errorMessage,
+                    severity: 'error'
+                });
+            }
+        }
+    };
+
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
@@ -188,8 +237,23 @@ const TrainingManagement = () => {
                                 <TableCell>{training.location}</TableCell>
                                 <TableCell>{training.maxParticipants}</TableCell>
                                 <TableCell>
-                                    <Button onClick={() => handleEditOpen(training)} startIcon={<EditIcon />} variant="outlined" size="small">
+                                    <Button 
+                                        onClick={() => handleEditOpen(training)} 
+                                        startIcon={<EditIcon />} 
+                                        variant="outlined" 
+                                        size="small"
+                                        sx={{ mr: 1 }}
+                                    >
                                         Edit
+                                    </Button>
+                                    <Button 
+                                        onClick={() => handleDelete(training._id)} 
+                                        startIcon={<DeleteIcon />} 
+                                        variant="outlined" 
+                                        color="error" 
+                                        size="small"
+                                    >
+                                        Delete
                                     </Button>
                                 </TableCell>
                             </TableRow>

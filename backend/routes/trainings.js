@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Training = require('../models/Training');
 const auth = require('../middleware/auth');
+const mongoose = require('mongoose');
 
 // Get all trainings
 router.get('/', async (req, res) => {
@@ -64,16 +65,28 @@ router.put('/:id', auth, async (req, res) => {
 // Delete a training
 router.delete('/:id', auth, async (req, res) => {
     try {
-        const training = await Training.findById(req.params.id);
-        if (!training) {
+        console.log('Delete request received for ID:', req.params.id);
+        
+        // Validate ID format
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({ msg: 'Invalid training ID format' });
+        }
+
+        // Try to delete directly
+        const result = await Training.deleteOne({ _id: req.params.id });
+        console.log('Delete result:', result);
+
+        if (result.deletedCount === 0) {
             return res.status(404).json({ msg: 'Training not found' });
         }
 
-        await training.remove();
-        res.json({ msg: 'Training removed' });
+        res.json({ msg: 'Training deleted successfully' });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Error in delete training:', err);
+        res.status(500).json({ 
+            msg: 'Server Error', 
+            error: err.message
+        });
     }
 });
 
