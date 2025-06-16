@@ -26,6 +26,7 @@ import {
     Person as PersonIcon,
     ExitToApp as LogoutIcon
 } from '@mui/icons-material';
+import YourSkills from './YourSkills';
 
 const EmployeeDashboard = () => {
     const navigate = useNavigate();
@@ -116,101 +117,106 @@ const EmployeeDashboard = () => {
                 <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                     <Grid container spacing={3}>
                         {/* Quick Stats */}
-                        <Grid item xs={12} md={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography color="textSecondary" gutterBottom>
-                                        Enrolled Trainings
-                                    </Typography>
-                                    <Typography variant="h4">
-                                        3
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography color="textSecondary" gutterBottom>
-                                        Completed Trainings
-                                    </Typography>
-                                    <Typography variant="h4">
-                                        5
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography color="textSecondary" gutterBottom>
-                                        Upcoming Trainings
-                                    </Typography>
-                                    <Typography variant="h4">
-                                        2
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-
-                        {/* Quick Actions */}
-                        <Grid item xs={12}>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography variant="h6" gutterBottom>
-                                    Quick Actions
-                                </Typography>
-                                <Grid container spacing={2}>
-                                    <Grid item>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            startIcon={<SchoolIcon />}
-                                            onClick={() => navigate('/my-trainings')}
-                                        >
-                                            View My Trainings
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            startIcon={<PersonIcon />}
-                                            onClick={() => navigate('/profile')}
-                                        >
-                                            Update Profile
-                                        </Button>
-                                    </Grid>
+                        <Grid item xs={12} md={8}>
+                            {/* Main dashboard content */}
+                            <Grid container spacing={3}>
+                                <Grid item xs={12} sm={4}>
+                                    <Card>
+                                        <CardContent>
+                                            <Typography color="textSecondary" gutterBottom>
+                                                Enrolled Trainings
+                                            </Typography>
+                                            <Typography variant="h4">
+                                                3
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
                                 </Grid>
-                            </Paper>
+                                <Grid item xs={12} sm={4}>
+                                    <Card>
+                                        <CardContent>
+                                            <Typography color="textSecondary" gutterBottom>
+                                                Completed Trainings
+                                            </Typography>
+                                            <Typography variant="h4">
+                                                5
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Card>
+                                        <CardContent>
+                                            <Typography color="textSecondary" gutterBottom>
+                                                Upcoming Trainings
+                                            </Typography>
+                                            <Typography variant="h4">
+                                                2
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Paper sx={{ p: 2 }}>
+                                        <Typography variant="h6" gutterBottom>
+                                            Quick Actions
+                                        </Typography>
+                                        <Grid container spacing={2}>
+                                            <Grid item>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    startIcon={<SchoolIcon />}
+                                                    onClick={() => navigate('/my-trainings')}
+                                                >
+                                                    View My Trainings
+                                                </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    startIcon={<PersonIcon />}
+                                                    onClick={() => navigate('/profile')}
+                                                >
+                                                    Update Profile
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Paper sx={{ p: 2 }}>
+                                        <Typography variant="h6" gutterBottom>
+                                            Recent Activities
+                                        </Typography>
+                                        <List>
+                                            <ListItem>
+                                                <ListItemText
+                                                    primary="Completed 'Advanced JavaScript' training"
+                                                    secondary="2 days ago"
+                                                />
+                                            </ListItem>
+                                            <ListItem>
+                                                <ListItemText
+                                                    primary="Enrolled in 'React Development' course"
+                                                    secondary="1 week ago"
+                                                />
+                                            </ListItem>
+                                            <ListItem>
+                                                <ListItemText
+                                                    primary="Updated profile information"
+                                                    secondary="2 weeks ago"
+                                                />
+                                            </ListItem>
+                                        </List>
+                                    </Paper>
+                                </Grid>
+                            </Grid>
                         </Grid>
-
-                        {/* Recent Activities */}
-                        <Grid item xs={12}>
-                            <Paper sx={{ p: 2 }}>
-                                <Typography variant="h6" gutterBottom>
-                                    Recent Activities
-                                </Typography>
-                                <List>
-                                    <ListItem>
-                                        <ListItemText
-                                            primary="Completed 'Advanced JavaScript' training"
-                                            secondary="2 days ago"
-                                        />
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemText
-                                            primary="Enrolled in 'React Development' course"
-                                            secondary="1 week ago"
-                                        />
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemText
-                                            primary="Updated profile information"
-                                            secondary="2 weeks ago"
-                                        />
-                                    </ListItem>
-                                </List>
-                            </Paper>
+                        {/* Your Skills Panel */}
+                        <Grid item xs={12} md={4}>
+                            <YourSkills />
                         </Grid>
                     </Grid>
                 </Container>
